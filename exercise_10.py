@@ -59,7 +59,7 @@ print(k)
 #Set a pool of values for init pop size
 initPop=[1,5,100]
 #Dataframe for storing model output
-store_initPop=pandas.DataFrame({"time":times,"N1":1,"N2":5,"N3":100})
+store_initPop=pandas.DataFrame({"time":times,"N1":0,"N2":0,"N3":0})
 
 #Using a for loop to make my life easier
 for i in range(0,len(initPop)):
@@ -68,7 +68,7 @@ for i in range(0,len(initPop)):
     store_initPop.iloc[:,i]=sim[:,0]
 print(store_initPop)    
     
-#Plot 1- pop size as function of time
+#Plot 3- effect of initial Pop size differences
 p=(ggplot(data=store_initPop)
     +geom_line(store_initPop,aes(x="time",y="N1"),color="orange")+theme_classic()
     +ylab("population size")

@@ -20,3 +20,11 @@ for i in range(0,len(rs)):
     sim=spint.odeint(func=ddSim,y0=N0,t=times,args=params)
     store_rs.iloc[:,i]=sim[:,0]
 
+rates=ggplot(store_rs,aes(x="time",y="N"))
+rates=rates+geom_line(store_rs,aes(y="r1"))
+rates=rates+geom_line(store_rs,aes(y="r2"))
+rates=rates+geom_line(store_rs,aes(y="r3"))
+rates=rates+geom_line(store_rs,aes(y="r4"))
+rates=rates+geom_line(store_rs,aes(y="r5"))
+
+rates

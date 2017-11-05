@@ -81,3 +81,32 @@ print(p)
 
 
 # 2
+
+# import libs
+import pandas
+from plotnine import *
+import numpy
+from scipy.optimize import minimize
+from scipy.stats import norm
+import scipy.stats
+
+
+def SIR (p):
+    S = p[0]
+    I = p[1]
+    R = p[2]
+    beta = [3]
+    gamma= [4]
+
+    dS = -1*(beta*I*S)
+    dT = (beta*I*S)-(gamma*I)
+    dR = (gamma*I)
+
+    loop to do the calcs start with time 0 for one condition
+    then loop with i-1 from here
+    output shite too
+
+
+    expected =B0+B1*obs.x
+    nll = -1*norm(expected, sigma).logpdf(obs.y).sum()
+    return nll

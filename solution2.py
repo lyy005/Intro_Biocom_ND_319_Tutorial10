@@ -23,4 +23,5 @@ initial = [susceptible, infected, resistant]
 
 for i in range(len(listb)):
     params = (listb[i], listy[i])
+    modelSim=spint.odeint(func=ddSim,y0=initial,t=times,args=params)
     

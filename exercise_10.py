@@ -35,7 +35,7 @@ g=(ggplot(data=store_growthRates)
     +geom_line(store_growthRates,aes(x="time",y="r3"),color="red")
     +geom_line(store_growthRates,aes(x="time",y="r4"),color="orange")
     +geom_line(store_growthRates,aes(x="time",y="r5"),color="purple"))
-print(p)
+print(g)
 
 #set a pool of values for carrying capacity
 carryCap=[10,50,100]
@@ -102,11 +102,11 @@ def SIR (p):
     dT = (beta*I*S)-(gamma*I)
     dR = (gamma*I)
 
-    loop to do the calcs start with time 0 for one condition
-    then loop with i-1 from here
-    output shite too
+    #loop to do the calcs start with time 0 for one condition
+    #then loop with i-1 from here
+    #output shite too
 
 
-    expected =B0+B1*obs.x
-    nll = -1*norm(expected, sigma).logpdf(obs.y).sum()
-    return nll
+    #expected =B0+B1*obs.x
+    #nll = -1*norm(expected, sigma).logpdf(obs.y).sum()
+    #return nll

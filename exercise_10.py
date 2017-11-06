@@ -77,36 +77,29 @@ p=(ggplot(data=store_initPop)
 print(p)
 
 
-
-
-
 # 2
 
-# import libs
-import pandas
-from plotnine import *
-import numpy
-from scipy.optimize import minimize
-from scipy.stats import norm
-import scipy.stats
-
-
-def SIR (p):
-    S = p[0]
-    I = p[1]
-    R = p[2]
-    beta = [3]
-    gamma= [4]
+def SIR (y,t0,beta,gamma):
+    S = y[0]
+    I = y[1]
+    R = y[2]
 
     dS = -1*(beta*I*S)
-    dT = (beta*I*S)-(gamma*I)
+    dI = (beta*I*S)-(gamma*I)
     dR = (gamma*I)
 
-    #loop to do the calcs start with time 0 for one condition
-    #then loop with i-1 from here
-    #output shite too
+    return dS, dI, dR
 
+times = range(0,500)
+params = (.0005, .05)
+NO = [999, 1, 0]
 
-    #expected =B0+B1*obs.x
-    #nll = -1*norm(expected, sigma).logpdf(obs.y).sum()
-    #return nll
+infection = pandas.DataFrame({"time":times,"S":0,"I":0,"R":0})
+print (infection)
+
+sim = si.odeint(func=SIR, y0=NO, t=times, args=params)
+
+# got the sim working for one beta and gamma value
+#need to import the vlaues from the sim list into a dataframe
+#need to make a loop that does this for all the beta and gamma values
+#need to add calcs to the loop as well.

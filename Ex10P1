@@ -1,0 +1,76 @@
+# Import packages:
+
+import numpy
+import os
+import pandas
+import scipy
+import sklearn
+import scipy.integrate as si
+from plotnine import *
+
+# Define custom function:
+
+def ddSim(y,t0,r,K):
+    
+    # Unpack lists containing state variables (y)
+    N=y[0]
+    
+    dNdt=r*(1-N/K)*N
+    
+    return [dNdt]
+   
+# Define paramaters, initial values for state variables and time steps:
+
+N0=[10]
+times=range(0,600)
+K=100
+
+# Part 1a:
+# Define initial parameters:
+
+rs=[-0.1,0.1,0.4,0.8,1]
+store_rs=pandas.DataFrame({"time":times,"r1":0,"r2":0,"r3":0,"r4":0,"r5":0})
+
+for i in range(0,len(rs)):
+    pars=(rs[i],K)
+    sim=si.odeint(func=ddSim,y0=N0,t=times,args=pars)
+    store_rs.iloc[:,i]=sim[:,0]
+    
+ggplot(store_rs,aes(x="times",y="r1",color="-0.1"))+geom_line()+geom_line(aes(y="r2",color="0.1"))+geom_line(aes(y="r3",color="0.4"))+geom_line(aes(y="r4",color="0.8"))+geom_line(aes(y="r5",color="1.0"))
+
+# Part 1b:
+# Define initial parameters: 
+
+r2=0.2
+N2=1.0
+times2=range(0,600)
+
+Ks=[10,50,100]
+store_Ks=pandas.DataFrame({"time":times,"K1":0,"K2":0,"K3":0})
+
+for j in range(0,len(Ks)):
+    pars2=(r2,Ks[j])
+    sim=si.odeint(func=ddSim,y0=N2,t=times2,args=pars2)
+    store_Ks.iloc[:,j]=sim[:,0]
+    
+ggplot(store_Ks,aes(x="times2",y="K1",color="10"))+geom_line()+geom_line(aes(y="K2",color="50"))+geom_line(aes(y="K3",color="100"))    
+
+# Part 1c:
+# Define initial parameters:
+
+r3=0.1
+K3=50.0
+times3=range(0,600)
+
+Ns=[1,50,100]
+store_Ns=pandas.DataFrame({"time":times,"N1":0,"N2":0,"N3":0})
+
+for k in range(0,len(Ns)):
+    pars3=(r3,K3)
+    sim=si.odeint(func=ddSim,y0=Ns[k],t=times3,args=pars3)
+    store_Ns.iloc[:,k]=sim[:,0]
+
+ggplot(store_Ns,aes(x="times3",y="N1",color="1"))+geom_line()+geom_line(aes(y="N2",color="50"))+geom_line(aes(y="N3",color="100"))   
+
+
+

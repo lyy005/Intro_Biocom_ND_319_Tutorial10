@@ -14,9 +14,11 @@ def disTrans(y, t, beta, gamma):
     S=y
     I=y
     R=y
+    N=1000
     dSdt = -beta * S * I / N
     dIdt = beta * S * I / N - gamma * I
     dRdt = gamma * I
+    
     return dSdt
     return dIdt
     return dRdt
@@ -28,10 +30,12 @@ for i in params_dict.keys():
     R0=0
     times=range(0,500)
     
-    y0=S0, I0, R0
-    modelSim=spint.odeint(func=disTrans,y0=(S0,I0,R0),t=times,args=params)
-    modelOutput=pandas.DataFrame({"t":times,"y":modelSim[:,0]})
+    modelSim=spint.odeint(func=disTrans,y0=S0,t=times,args=params)
+    modelSim2=spint.odeint(func=disTrans,y0=I0,t=times,args=params)
+    modelSim3=spint.odeint(func=disTrans,y0=R0,t=times,args=params)
+    modelOutput=pandas.DataFrame({"t":times,"S":modelSim[:,0],"I":modelSim2[:,0],"R":modelSim3[:,0]})
 
 print modelOutput
-g=ggplot(modelOutput,aes(x="t",y="y"))+geom_line()+theme_classic()
-g.draw()
+
+a=ggplot(modelOutput,aes(x="t",y="y0"))+geom_line(aes(x="t",y="S"),color='blue')+geom_line(aes(x="t",y="I"),color='red')+geom_line(aes(x="t",y="R"),color='green')+theme_classic()
+a.draw()

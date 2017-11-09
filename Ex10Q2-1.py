@@ -52,7 +52,6 @@ for i in range(0,6):
     #calculate R0
     DataOut.iloc[i,4]=(betas[i]*1000)/gammas[i]
 
-### Look at the results!
 print(plots)
 print(DataOut)
 

@@ -35,7 +35,7 @@ for i in range(0,6):
     #put output into dataframe
     sim_df=pandas.DataFrame({"t": times, "dSdt": sim[:,0], "dIdt": sim[:,1], "dRdt": sim[:,2]})
     #plot S, I, and R against time
-    plots[i]=ggplot(sim_df, aes(x="t"))+geom_line(aes(y="dSdt"))+theme_classic()+xlab("Time")+ylab("N")+geom_line(aes(y="dIdt"), color = "red")+geom_line(aes(y="dRdt"), color = "blue")+ggtitle(plotnames[i])
+    ggplot(sim_df, aes(x="t"))+geom_line(aes(y="dSdt"))+theme_classic()+xlab("Time")+ylab("N")+geom_line(aes(y="dIdt"), color = "red")+geom_line(aes(y="dRdt"), color = "blue")
     #calculate maximum incidence
     incidence=range(500)
     #creates a list to store incidence values
@@ -50,9 +50,9 @@ for i in range(0,6):
     #calculate percent affected
     DataOut.iloc[i, 3]=(sim_df.iloc[499,0]+sim_df.iloc[499,1])/100
     #calculate R0
-    DataOut.iloc[i,4]=(betas[i]*1000)/gammas[i]
+    DataOut.iloc[i,4]=(parB[i]*1000)/parr[i]
 
-print(plots)
+print(ggplot)
 print(DataOut)
 
     

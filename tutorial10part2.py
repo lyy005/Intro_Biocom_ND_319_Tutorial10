@@ -39,3 +39,16 @@ print modelOutput
 
 a=ggplot(modelOutput,aes(x="t",y="y0"))+geom_line(aes(x="t",y="S"),color='blue')+geom_line(aes(x="t",y="I"),color='red')+geom_line(aes(x="t",y="R"),color='green')+theme_classic()
 a.draw()
+
+for i in I.modelOutput:
+    incidence=i-(i-1)
+
+for i in modelOutput:
+    prevalence= I(i) / (S(i)+ I(i)+ R(i))
+
+for i in modelOutput:
+    percentAffected= (I(i)+ S(i)) / (S(i)+ I(i)+ R(i))
+    
+for i in modelOutput:
+    reproductionNumber= beta[i]* (S(i)+ I(i)+ R(i)) / gamma[i]
+    

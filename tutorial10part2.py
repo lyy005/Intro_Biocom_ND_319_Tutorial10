@@ -29,7 +29,7 @@ for i in params_dict.keys():
     times=range(0,500)
     
     y0=S0, I0, R0
-    modelSim=spint.odeint(func=disTrans,y0=S0 ,t=times,args=params)
+    modelSim=spint.odeint(func=disTrans,y0=(S0,I0,R0),t=times,args=params)
     modelOutput=pandas.DataFrame({"t":times,"y":modelSim[:,0]})
 
 print modelOutput

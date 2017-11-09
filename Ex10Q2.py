@@ -14,28 +14,32 @@ from plotnine import *
 def epiSim(y,t,B,r):
     I=y[0]
     S=y[1]
-    
     dSdt= (-B*I*S)
     dIdt= (B*I*S)-(r*I)
     dRdt= (r*I)
-    
     return[dSdt,dIdt,dRdt]
 
 #generate a dataframe containing a list of the B and r parameters
 parB=[0.0005,0.005,0.0001,0.00005,0.0001,0.0002,0.0001]
 parr=[0.05,0.5,0.1,0.1,0.05,0.05,0.06]
-par_array=numpy.column_stack([parB,parr])
-par_df=pandas.DataFrame(par_array,columns=['B','r'])
-
+DataOut=pandas.DataFrame(numpy.zeros([7,6]),columns=['MaxIncidence','MaxPrevalence','PercentAffected','R0','Beta','Gamma'])
+times=range(0,500)
 #extract params from dataframe
 for i in range(0,6):
     I0=[1]
     S0=[999,1,0]
-    params=(par_df.B[i],par_df.r[i])
+    parms=(parB[i],parr[i])
     times=range(0,500)
-    #create a model using odeint
-    modelSim=spint.odeint(func=epiSim,y0=S0,t=times,args=params)
-#maxDailyIncidence is the maxInfectivityRate
-#maxDailyPrevalence is the half-max of the equation
-maxDailyIncidence=
-maxDailyPrevalence=
+    sim=spint.odeint(func=epiSim,y0=S0,t=times,args=parms)
+    inc=sim[1:500,1]-sim[0:499,1]
+    maxinc=numpy.max(inc)#create a model using odeint
+    prevalence=((sim[:,1])/(sim[:,0]+sim[:,1]+sim[:,2]))
+    maxprev=numpy.max(prevalence)
+    affected=((sim[499,1]+sim[499,2])/(sim[499,0]+sim[499,1]+sim[499,2]))
+    R0=(parB[i])*1000/parr[i]/parr[i]
+    DataOut.iloc[i,0]=maxinc
+    DataOut.iloc[i,1]=maxprev
+    DataOut.iloc[i,2]=affected
+    DataOut.iloc[i,3]=R0
+    DataOut.iloc[i,4]=parB[i]
+    DataOut.iloc[i,5]=parr[i]

@@ -1,0 +1,35 @@
+
+#Import Packages
+import pandas
+import numpy
+from scipy.optimize import minimize
+from scipy.stats import norm
+import scipy.integrate as si
+import re
+import os
+from plotnine import *
+
+#Plot of five population sizes 
+def ddSim(y,t0,r,K):
+    N=y[0]
+    dNdt=r*(1-N/K)*N
+    return [dNdt]
+    
+params=(0.3,10)
+N0=[10]
+times=range(0,100)
+    
+modelSim=si.odeint(func=ddSim,y0=N0,t=times,args=params)
+    
+rs=[-0.1,0.1,0.4,0.8,1.0]
+store_rs=pandas.DataFrame({"times":times,"r1":0,"r3":0,"r4":0,"r5":0})
+
+for i in range(0,len(rs)):
+    pars=(rs[i],100)
+    sim=si.odeint(func=ddSim,y0=10,t=times,args=pars)
+    store_rs.iloc[:,i]=sim[:,0]
+    
+modelOutput=pandas.DataFrame({"t":times,"rs":modelSim[:,0]})
+
+#plot
+ggplot(modelOutput,aes(x="t",y="rs"))+geom_line()+theme_classic()

@@ -30,16 +30,42 @@ for i in range(0,6):
     S0=[999,1,0]
     parms=(parB[i],parr[i])
     times=range(0,500)
+    #simuate model
     sim=spint.odeint(func=epiSim,y0=S0,t=times,args=parms)
-    inc=sim[1:500,1]-sim[0:499,1]
-    maxinc=numpy.max(inc)#create a model using odeint
-    prevalence=((sim[:,1])/(sim[:,0]+sim[:,1]+sim[:,2]))
-    maxprev=numpy.max(prevalence)
-    affected=((sim[499,1]+sim[499,2])/(sim[499,0]+sim[499,1]+sim[499,2]))
-    R0=(parB[i])*1000/parr[i]/parr[i]
-    DataOut.iloc[i,0]=maxinc
-    DataOut.iloc[i,1]=maxprev
-    DataOut.iloc[i,2]=affected
-    DataOut.iloc[i,3]=R0
-    DataOut.iloc[i,4]=parB[i]
-    DataOut.iloc[i,5]=parr[i]
+    #put output into dataframe
+    sim_df=pandas.DataFrame({"t": times, "dSdt": sim[:,0], "dIdt": sim[:,1], "dRdt": sim[:,2]})
+    #plot S, I, and R against time
+    plots[i]=ggplot(sim_df, aes(x="t"))+geom_line(aes(y="dSdt"))+theme_classic()+xlab("Time")+ylab("N")+geom_line(aes(y="dIdt"), color = "red")+geom_line(aes(y="dRdt"), color = "blue")+ggtitle(plotnames[i])
+    #calculate maximum incidence
+    incidence=range(500)
+    #creates a list to store incidence values
+    for j in range(0, 500):
+        #calculate incidence at every time step
+        incidence[j]=sim_df.iloc[j,0]-sim_df.iloc[j-1,0]
+    DataOut.iloc[i, 1]=max(incidence) #get the max
+    #calculate max prevalence
+    prevalence=sim_df.iloc[:,0]/1000 
+    #calculate prevalence at every time step
+    DataOut.iloc[i, 2]=max(prevalence) 
+    #calculate percent affected
+    DataOut.iloc[i, 3]=(sim_df.iloc[499,0]+sim_df.iloc[499,1])/100
+    #calculate R0
+    DataOut.iloc[i,4]=(betas[i]*1000)/gammas[i]
+
+### Look at the results!
+print(plots)
+print(DataOut)
+
+    
+    #inc=sim[1:500,1]-sim[0:499,1]
+    #maxinc=numpy.max(inc)#create a model using odeint
+    #prevalence=((sim[:,1])/(sim[:,0]+sim[:,1]+sim[:,2]))
+    #maxprev=numpy.max(prevalence)
+    #affected=((sim[499,1]+sim[499,2])/(sim[499,0]+sim[499,1]+sim[499,2]))
+    #R0=(parB[i])*1000/parr[i]/parr[i]
+    #DataOut.iloc[i,0]=maxinc
+    #DataOut.iloc[i,1]=maxprev
+    #DataOut.iloc[i,2]=affected
+    #DataOut.iloc[i,3]=R0
+    #DataOut.iloc[i,4]=parB[i]
+    #DataOut.iloc[i,5]=parr[i]

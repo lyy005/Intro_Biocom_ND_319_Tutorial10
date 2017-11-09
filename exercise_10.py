@@ -57,7 +57,7 @@ k=(ggplot(data=store_carryCap)
 print(k)
 
 #Set a pool of values for init pop size
-initPop=[1,5,100]
+initPop=[1,50,100]
 #Dataframe for storing model output
 store_initPop=pandas.DataFrame({"time":times,"N1":0,"N2":0,"N3":0})
 

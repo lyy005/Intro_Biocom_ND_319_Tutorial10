@@ -1,6 +1,7 @@
 import numpy
 import pandas
 import scipy
+import scipy.integrate as spint
 from plotnine import *
 #SIR model in epidemiology
 #N=S+I+R (susceptible-->B-->infected-->g-->resistant); unidirectional
@@ -29,9 +30,12 @@ par_df=pandas.DataFrame(par_array,columns=['B','r'])
 #extract params from dataframe
 for i in range(0,6):
     I0=[1]
-    S0=[999]
+    S0=[999,1,0]
     params=(par_df.B[i],par_df.r[i])
     times=range(0,500)
-    #creat a model using odeint
-    modelSim=spint.odeint(func=epiSim,y0=(I0,S0),t=times,args=params)
-    
+    #create a model using odeint
+    modelSim=spint.odeint(func=epiSim,y0=S0,t=times,args=params)
+#maxDailyIncidence is the maxInfectivityRate
+#maxDailyPrevalence is the half-max of the equation
+maxDailyIncidence=
+maxDailyPrevalence=

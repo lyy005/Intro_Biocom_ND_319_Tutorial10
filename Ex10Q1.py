@@ -17,6 +17,8 @@ for i in range(0,len(rs)):
     pars1=(rs[i],K)
     sim=spint.odeint(func=ddSim,y0=N,t=times,args=pars1)
     store_rs.iloc[:,i]=sim[:,0]
+a=ggplot(store_rs,aes(x="time",y="r2"))
+a+geom_point()+coord_cartesian()
 
 ks=[10,50,100]
 store_ks=pandas.DataFrame({"time":times,"kl":0,"k2":0,"k3":0})

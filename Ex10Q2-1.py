@@ -22,6 +22,10 @@ def epiSim(y,t,B,r):
 #generate a dataframe containing a list of the B and r parameters
 parB=[0.0005,0.005,0.0001,0.00005,0.0001,0.0002,0.0001]
 parr=[0.05,0.5,0.1,0.1,0.05,0.05,0.06]
+#create list for parameters
+plotnames=["Parameter 1", "Parameter 2","Parameter 3","Parameter 4","Parameter 5","Parameter 6", "Parameter 7"]
+#create list to hold plots
+plots=["Plot1", "Plot2","Plot3","Plot4","Plot5","Plot6","Plot7"]
 DataOut=pandas.DataFrame(numpy.zeros([7,6]),columns=['MaxIncidence','MaxPrevalence','PercentAffected','R0','Beta','Gamma'])
 times=range(0,500)
 #extract params from dataframe
@@ -35,7 +39,7 @@ for i in range(0,6):
     #put output into dataframe
     sim_df=pandas.DataFrame({"t": times, "dSdt": sim[:,0], "dIdt": sim[:,1], "dRdt": sim[:,2]})
     #plot S, I, and R against time
-    ggplot(sim_df, aes(x="t"))+geom_line(aes(y="dSdt"))+theme_classic()+xlab("Time")+ylab("N")+geom_line(aes(y="dIdt"), color = "red")+geom_line(aes(y="dRdt"), color = "blue")
+    ggplot(sim_df, aes(x="t"))+geom_line(aes(y="dSdt"))+theme_classic()+xlab("Time")+ylab("N")+geom_line(aes(y="dIdt"), color = "red")+geom_line(aes(y="dRdt"), color = "blue")+ggtitle(plotnames[i])
     #calculate maximum incidence
     incidence=range(500)
     #creates a list to store incidence values
@@ -52,7 +56,7 @@ for i in range(0,6):
     #calculate R0
     DataOut.iloc[i,4]=(parB[i]*1000)/parr[i]
 
-print(ggplot)
+print(plots)
 print(DataOut)
 
     

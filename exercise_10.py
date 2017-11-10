@@ -64,14 +64,14 @@ store_initPop=pandas.DataFrame({"time":times,"N1":0,"N2":0,"N3":0})
 #Using a for loop to make my life easier
 for i in range(0,len(initPop)):
     pars=(.1,50,initPop[i])
-    sim=si.odeint(func=popGrowth,y0=NO,t=times,args=pars)
+    sim=si.odeint(func=popGrowth,y0=initPop[i],t=times,args=pars)
     store_initPop.iloc[:,i]=sim[:,0]
 print(store_initPop)    
     
 #Plot 3- effect of initial Pop size differences
 p=(ggplot(data=store_initPop)
     +geom_line(store_initPop,aes(x="time",y="N1"),color="orange")+theme_classic()
-    +ylab("population size")
+    +ylab("population size")+ylim(0,100)
     +geom_line(store_initPop,aes(x="time",y="N2"),color="yellow")
     +geom_line(store_initPop,aes(x="time",y="N3"),color="red"))
 print(p)

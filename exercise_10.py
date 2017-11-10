@@ -41,6 +41,7 @@ print(g)
 carryCap=[10,50,100]
 #Dataframe for storing model output
 store_carryCap=pandas.DataFrame({"time":times,"K1":0,"K2":0,"K3":0})
+NO = 1
 #for loop for Plot 2
 for i in range(0,len(carryCap)):
     pars=(.2,carryCap[i],1)
@@ -71,7 +72,7 @@ print(store_initPop)
 #Plot 3- effect of initial Pop size differences
 p=(ggplot(data=store_initPop)
     +geom_line(store_initPop,aes(x="time",y="N1"),color="orange")+theme_classic()
-    +ylab("population size")+ylim(0,100)
+    +ylab("population size")
     +geom_line(store_initPop,aes(x="time",y="N2"),color="yellow")
     +geom_line(store_initPop,aes(x="time",y="N3"),color="red"))
 print(p)

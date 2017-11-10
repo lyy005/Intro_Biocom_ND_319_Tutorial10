@@ -19,7 +19,8 @@ for i in range(len(listr)):
     modelSim=spint.odeint(func=ddSim,y0=N0,t=times,args=params)
     modelOutput.iloc[:,i]=modelSim[:,0]
     
-ggplot(modelOutput,aes(x="time",y="r1"))+geom_line()+theme_classic()
+g1=ggplot(modelOutput,aes(x="time",y="r1"))+geom_line()+geom_line(aes(y="R2"))+geom_line(aes(y="R3"))+geom_line(aes(y="R4"))+geom_line(aes(y="R5"))
+g1+theme_classic()
 
 
 listK = (10,50,100)
@@ -31,8 +32,8 @@ for i in range(len(listK)):
     modelSim=spint.odeint(func=ddSim,y0=N0,t=times,args=params)
     modelOutput.iloc[:,i]=modelSim[:,0]
     
-ggplot(modelOutput,aes(x="time",y="K1"))+geom_line()+theme_classic()
-
+g2=ggplot(modelOutput,aes(x="time",y="K1"))+geom_line()+geom_line(aes(y="K2"))+geom_line(aes(y="K3"))
+g2+theme_classic()
 
 listN0 = (1, 50, 100)
 params = (0.1, 50)
@@ -41,6 +42,7 @@ for i in range(len(listN0)):
     modelSim=spint.odeint(func=ddSim,y0=listN0[i],t=times,args=params)
     modelOutput.iloc[:,i]=modelSim[:,0]
     
-ggplot(modelOutput,aes(x="time",y="N1"))+geom_line()+theme_classic()
+g3=ggplot(modelOutput,aes(x="time",y="N1"))+geom_line()+geom_line(aes(y="N2"))+geom_line(aes(y="N3"))
+g3+theme_classic()
 
-
+#We dont know how to get all the plots outputted, but the code is there to make them all. We asked stuart but he didn't help us with this specifically

@@ -1,0 +1,63 @@
+import pandas
+import numpy as np
+import scipy
+import scipy.integrate as spint
+from plotnine import *
+
+beta = [0.0005,0.005,0.0001,0.00005,0.0001,0.0002,0.0001]
+gamma = [0.05,0.5,0.1,0.1,0.05,0.05,0.06]
+beta_gamma_dict = {}
+prev_I = 1
+incidence_arr = []
+prevalence_arr = []
+for i in range(0,len(beta)):
+    beta_gamma_dict[beta[i]] = gamma[i]
+#beta_gamma_dict_2 = {0.0005: 0.05, 0.005: 0.5, 0.0001: 0.1, 0.00005: 0.1, 0.0001: 0.05, 0.0002: 0.05, 0.0001: 0.06}
+    basic_repr_num = (beta[i]*1000)/(gamma[i])
+    print (basic_repr_num)
+    
+def ddSim(y,t0,beta,gamma):
+# "unpack" lists containing state variables (y)
+#    y = np.zeros(3)
+#    [S,I,R] = y
+    S = y[0]
+    I = y[1]
+    R = y[2]
+    N = S + I + R
+    dSdt = (-1)*beta*I*S
+    dIdt = beta*I*S - gamma*I
+    dRdt = gamma*I
+
+    return dSdt,dIdt,dRdt
+
+for key, value in beta_gamma_dict.items():
+### Define parameters, initial values for state variables, and time steps
+    params=(key,value)
+    N = S + I + R
+    S0=999
+    I0=1
+    R0=0
+    N=1000
+    times=range(0,500)
+    y0 = [S0, I0, R0]
+    modelSim0=spint.odeint(func=ddSim, y0=y0, t=times, args=params)
+
+
+### put model output in a dataframe for plotting purposes
+    modelOutput=pandas.DataFrame({"t":times,"S":modelSim0[:,0],"I":modelSim0[:,1],"R":modelSim0[:,2]})
+    #print (modelOutput)
+    for i in modelSim0[:,1]:
+        incidence = i - prev_I
+        prevalence = i / N
+        prev_I = i
+        incidence_arr.append(incidence)
+        prevalence_arr.append(prevalence)
+    print(max(incidence_arr))
+    print(max(prevalence_arr))
+    incidence_arr = []
+    prevalence_arr = []
+    #print(modelOutput)
+    percent_affected = ((modelSim0[:,1][-1]) + (modelSim0[:,2][-1]))/ N
+    print (percent_affected)
+ggplot(modelOutput,aes(x="t",y="y0"))+geom_line(aes(x="t",y="S"),color='red')+geom_line(aes(x="t",y="I"),color='black')+geom_line(aes(x="t",y="R"),color='green')
+

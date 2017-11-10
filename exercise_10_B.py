@@ -129,14 +129,11 @@ print results
 
 '''
 * observations *
-as gamma gets smaller the max incidence and daily prevalence rises, percent infection rises and repoduction number rises. 
-big gamma, things get smaller
-
-as beta gets bigger the max incidence and daily prevalence rises, percent effectice rises and repo number rises. 
-small beta, things get smaller
-
-so a high beta and a small gamma cause the disease to have a higher rate of infection in the population 
-
+We noticed that if beta is held constant while gamma gets smaller the max incidence, daily prevalence, percent infection, 
+and reproductive number all rise.  Thus a bigger gamma causes, things to get smaller If we hold gamma constant, as  beta
+gets bigger the max incidence, daily prevalence, percent affected, and  reproductive number all rise. Thus a small beta, 
+causes things to get smaller To summarize, a high beta and a small gamma cause the disease to have a higher rate and 
+srpead of infection in the population.
 
 '''
 

@@ -1,0 +1,34 @@
+#Import Packages
+import pandas
+import numpy
+from scipy.optimize import minimize
+from scipy.stats import norm
+import scipy.integrate as si
+import re
+import os
+from plotnine import *
+
+#Plot of Population Size as a function of time with 3 populations with different carrying capacities
+def ddSim(y,t0,r,K):
+    N=y[0]
+    dNdt=r*(1-N/K)*N
+    return [dNdt]
+    
+params=(0.3,10)
+N0=[1]
+times=range(0,100)
+ks=["0,10","0,50","0,100"]
+r=[0.2]
+    
+modelSim=si.odeint(func=ddSim,y0=N0,t=times,args=params)
+
+store_rs=pandas.DataFrame({"times":times,"k1":0,"k2":0,"k3":0})
+
+for i in range(0,len(rs)):
+    pars=(rs[i],K)
+    sim=si.odeint(func=ddSim,y0=10,t=times,args=pars)
+    store_rs.iloc[:,i]=sim[:,0]
+modelOutput=pandas.DataFrame({"t":times,"ks":modelSim[:,0]})
+
+#plot
+ggplot(modelOutput,aes(x="t",y="rs"))+geom_line()+theme_classic()

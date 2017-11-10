@@ -1,0 +1,5 @@
+#When there is only one person infected, and with a time frame of 500 days, the graphs 
+#even  out to all peopel being susceptible, but recovered
+#If half of the people are infected, the graph evens out to remain that 50% of people
+#are still infected and 50% are susceptible after 500 days
+#the different rates of beta and gamma do not significantly affect these observations

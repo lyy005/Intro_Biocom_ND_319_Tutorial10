@@ -1,7 +1,14 @@
+##Ex 10
+
+## Question 1
+
+#import packages
+
 import pandas
 import scipy
 import scipy.integrate as spint
 from plotnine import *
+
 
 def ddSim (y,t0,r,K): #Define basic model for density-dependent growth
     N=y[0]
@@ -29,6 +36,8 @@ rates=rates+geom_line(store_rs,aes(y="r5"))
 
 rates #Display the graph
 
+####### part 2 of quesiton 1
+
 r=0.2 #Define a set growth rate and iitial population size
 N0=[1]
 times=range(0,50)
@@ -47,31 +56,19 @@ capacity=capacity+geom_line(store_Ks,aes(y="K2"))
 capacity=capacity+geom_line(store_Ks,aes(y="K3"))
 
 capacity #Display graph
-## number 1 part 3
+
+######## number 1 part 3
 
 r=0.1 #Define a set growth rate and carrying capacity
 K=50
 
 times=range(0,100)
 
-times=range(0,500)
-
 N0s=[1,50,100] #Define a list of initial sizes for each individual population
 store_N0s=pandas.DataFrame({"time":times,"N01":0,"N02":0,"N03":0}) #Initialize a data frame to store initial sizes with columns for each
                                                                #initial size, and the times modeled
 
 for i in range(0,len(N0s)): #Set up a for loop that runs through each N0 in the list and models population growth using
-
-    params=(r,K)       #other established parameters
-    sim=spint.odeint(func=ddSim,y0=N0s[i],t=times,args=params)
-    store_N0s.iloc[:,i]=sim[:,0] #Store population values in the column appropriate for the current carrying capacity
-
-popsize=ggplot(store_N0s,aes(x="time",y="N"))+theme_classic()#Set up base plot for population curves
-popsize=popsize+geom_line(store_N0s,aes(y="N01"))
-popsize=popsize+geom_line(store_N0s,aes(y="N02"))
-popsize=popsize+geom_line(store_N0s,aes(y="N03"))
-
-popsize #Display graph
 
     params=(r,K)#other established parameters
     N0=N0s[i] #Assign N0 a single value from the array of initial population sizes
@@ -158,3 +155,5 @@ gamma=numpy.array([.05, .5, .1, .1, .05, .05, .06])
 basicReproductionNumber=(((beta*(S0+I0+R0))/gamma))
 print("BasicReproductionNumber")
 print(basicReproductionNumber)
+
+print("!!! please see file named README for analysis completing question 2 !!!")

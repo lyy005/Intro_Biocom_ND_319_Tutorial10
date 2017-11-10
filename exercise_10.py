@@ -78,29 +78,4 @@ p=(ggplot(data=store_initPop)
 print(p)
 
 
-# 2
-
-def SIR (y,t0,beta,gamma):
-    S = y[0]
-    I = y[1]
-    R = y[2]
-
-    dS = -1*(beta*I*S)
-    dI = (beta*I*S)-(gamma*I)
-    dR = (gamma*I)
-
-    return dS, dI, dR
-
-times = range(0,500)
-params = (.0005, .05)
-NO = [999, 1, 0]
-
-infection = pandas.DataFrame({"time":times,"S":0,"I":0,"R":0})
-print (infection)
-
-sim = si.odeint(func=SIR, y0=NO, t=times, args=params)
-
-# got the sim working for one beta and gamma value
-#need to import the vlaues from the sim list into a dataframe
-#need to make a loop that does this for all the beta and gamma values
-#need to add calcs to the loop as well.
+# 2 MOVED TO A NEW .PY file!!! ALSO IN OUR GIT repo

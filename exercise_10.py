@@ -76,6 +76,3 @@ p=(ggplot(data=store_initPop)
     +geom_line(store_initPop,aes(x="time",y="N2"),color="yellow")
     +geom_line(store_initPop,aes(x="time",y="N3"),color="red"))
 print(p)
-
-
-# 2 MOVED TO A NEW .PY file!!! ALSO IN OUR GIT repo

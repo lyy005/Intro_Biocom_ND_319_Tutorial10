@@ -27,6 +27,7 @@ for i in range(0,len(rlist)):
     sim = spint.odeint(func=ddSim, y0=N0, t=times, args=pars)
     store_rs.iloc[:,i]=sim[:,0]
 
+cols = ["black", "red", "blue", "green", "orange"]
 #Simulating plot
 p = ggplot(store_rs, aes(x='time', y='r1')) + geom_line()  #r1
 p = p + geom_line(aes(x='time', y='r2'), colour = "red") #r2
@@ -82,21 +83,29 @@ def SIR(y,t0,beta,gamma):
 
 betalist = [0.0005, 0.005, 0.0001, 0.00005,0.0001,0.0002,0.0001]
 gammalist = [0.05,0.5,0.1,0.1,0.05,0.05,0.06]
+#inital values for S, I, R
 SIRvalues = [999,1,0]
 times = range(0,500)
 
-SIRframe = pandas.DataFrame({"time":times, "S":0, "I":0, "R":0})
-#renaming columns because dumb
-cols = ["S", "I", "R", "time"]
-SIRframe = SIRframe[cols]
+#creating a dataframe to store outputs for 7 scenarios
+SIRframe = pandas.DataFrame({"beta":betalist, "gamma":gammalist, "MDI":0, "MDP":0, "percent_affected":0, "R0":0})
+
+#calculating the R0 
+SIRframe.R0 = (SIRframe.beta * 1000)/SIRframe.gamma
+
+inc = range(0,500) #initializing incidence parameter
+prev = range(0,500) #initilaizing prevalence parameter 
 
 for i in range(0,7):
     pars = (betalist[i],gammalist[i])
-    sim = spint.odeint(func=SIR, y0=SIRvalues, t=times, args=pars)
-    for j in range(0,3):
-        SIRframe.iloc[:,j]=sim[:,j]
+    sim = spint.odeint(func=SIR, y0=SIRvalues, t=times, args=pars) #simulate model for each beta,gamma pair
+    for j in range(500):
+        inc[j] = sim[j,1] - sim[j-1,1] #calculate incidence for all time points
+        SIRframe.iloc[i,0] = max(inc) #select maximum incidence 
+        prev[j] = sim[j,1] / (sim[j,0] + sim[j,1] + sim[j,2]) #calculate prevalence for all time points
+        SIRframe.iloc[i,1] = max(prev) #select maximum prevalence
+        SIRframe.iloc[i,5] = (sim[499,1] + sim[499,2]) / (sim[499,0] + sim[499,1] + sim[499,2]) #calculate final percent affected
 
-p4 = ggplot(SIRframe, aes(x='time', y='S')) + geom_line()  #susceptible
-p4 = p4 + geom_line(aes(x='time', y='I'), colour = "red") #infected
-p4 = p4 + geom_line(aes(x='time', y='R'), colour = "blue") #removed
-print p4
+
+print SIRframe
+

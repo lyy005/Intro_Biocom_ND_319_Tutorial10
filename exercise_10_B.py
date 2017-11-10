@@ -15,9 +15,20 @@ def SIR (y,t0,beta,gamma):
 
 times = range(0,500)
 params = (.0005, .05) #need to change these for diff betas and gammas # need to make an arraay or dataframe
+
+data = [{'beta' : .0005, 'gamma' : .05},
+        {'beta': .005, 'gamma': .5},
+        {'beta': .0001, 'gamma': .1},
+        {'beta': .00005, 'gamma': .1},
+        {'beta': .0001, 'gamma': .05},
+        {'beta': .0002, 'gamma': .05},
+        {'beta': .0001, 'gamma': .06}]
+my_data = pandas.DataFrame(data)
+
 NO = [999, 1, 0]
 
 infection = pandas.DataFrame({"time":times,"S":0,"I":0,"R":0})
+results = []
 
 # sim
 sim = si.odeint(func=SIR, y0=NO, t=times, args=params)
@@ -62,6 +73,7 @@ I= infection.iloc[0]['I']
 R= infection.iloc[0]['R']
 S= infection.iloc[0]['S']
 Ro = (beta*(S+I+R))/gamma
+
 
 #need these to fill into a list or a dataframe
 # need to put all this intoa bigger loop

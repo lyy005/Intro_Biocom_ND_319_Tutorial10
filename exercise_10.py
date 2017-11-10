@@ -98,8 +98,13 @@ infection = pandas.DataFrame({"time":times,"S":0,"I":0,"R":0})
 print (infection)
 
 sim = si.odeint(func=SIR, y0=NO, t=times, args=params)
+infection.iloc[:,i]=sim[:,0]
+print infection
+
+
 
 # got the sim working for one beta and gamma value
 #need to import the vlaues from the sim list into a dataframe
 #need to make a loop that does this for all the beta and gamma values
 #need to add calcs to the loop as well.
+

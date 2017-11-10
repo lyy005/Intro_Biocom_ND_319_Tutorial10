@@ -25,7 +25,25 @@ data = [{'beta' : .0005, 'gamma' : .05},
         {'beta': .00005, 'gamma': .1},
         {'beta': .0001, 'gamma': .05},
         {'beta': .0002, 'gamma': .05},
-        {'beta': .0001, 'gamma': .06}]
+        {'beta': .0001, 'gamma': .06},
+        {'beta': .0001, 'gamma': .9},
+        {'beta': .0001, 'gamma': .5},
+        {'beta': .0001, 'gamma': .25},
+        {'beta': .0001, 'gamma': .1},
+        {'beta': .0001, 'gamma': .05},
+        {'beta': .0001, 'gamma': .01},
+        {'beta': .0001, 'gamma': .001},
+        {'beta': .0001, 'gamma': .0001},
+        {'beta': .9, 'gamma': .0001},
+        {'beta': .5, 'gamma': .0001},
+        {'beta': .25, 'gamma': .0001},
+        {'beta': .1, 'gamma': .0001},
+        {'beta': .05, 'gamma': .0001},
+        {'beta': .01, 'gamma': .0001},
+        {'beta': .001, 'gamma': .0001},
+        {'beta': .0001, 'gamma': .0001},
+        {'beta': .00001, 'gamma': .0001},
+        ]
 my_data = pandas.DataFrame(data)
 
 # make lists to hold the results
@@ -36,18 +54,19 @@ ro = []
 b = []
 g = []
 
-# start big for loop here
+# start big  loop here
 for line in range(0,len(my_data),):
     q = my_data.iloc[line]['beta']
     p = my_data.iloc[line]['gamma']
-    params = (q, p)
+    params = (q, p)  # make tuple
 
-    b.append(params[0])
+    b.append(params[0])  # append list
     g.append(params[1])
 
+    # make dataframe
     infection = pandas.DataFrame({"time":times,"S":0,"I":0,"R":0})
 
-    # sim
+    # sim shite
     sim = si.odeint(func=SIR, y0=NO, t=times, args=params)
 
     # fill dataframe
@@ -95,7 +114,7 @@ for line in range(0,len(my_data),):
     repo_number = (beta*(S+I+R))/gamma
     ro.append(repo_number)
 
-
+# make a dataframe for results from all the lists
 results = pandas.DataFrame(
     {'beta' : b,
      'gamma' : g,
@@ -104,12 +123,22 @@ results = pandas.DataFrame(
      'percent_affect' : pa,
      'repo_num' : ro})
 
-
 print results
 #need these to fill into a list or a dataframe
 # need to put all this intoa bigger loop
 
+'''
+* observations *
+as gamma gets smaller the max incidence and daily prevalence rises, percent infection rises and repoduction number rises. 
+big gamma, things get smaller
 
+as beta gets bigger the max incidence and daily prevalence rises, percent effectice rises and repo number rises. 
+small beta, things get smaller
+
+so a high beta and a small gamma cause the disease to have a higher rate of infection in the population 
+
+
+'''
 
 
 

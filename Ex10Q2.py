@@ -59,16 +59,7 @@ for i in range(0,6):
 print(plots)
 print(DataOut)
 
-    
-    #inc=sim[1:500,1]-sim[0:499,1]
-    #maxinc=numpy.max(inc)#create a model using odeint
-    #prevalence=((sim[:,1])/(sim[:,0]+sim[:,1]+sim[:,2]))
-    #maxprev=numpy.max(prevalence)
-    #affected=((sim[499,1]+sim[499,2])/(sim[499,0]+sim[499,1]+sim[499,2]))
-    #R0=(parB[i])*1000/parr[i]/parr[i]
-    #DataOut.iloc[i,0]=maxinc
-    #DataOut.iloc[i,1]=maxprev
-    #DataOut.iloc[i,2]=affected
-    #DataOut.iloc[i,3]=R0
-    #DataOut.iloc[i,4]=parB[i]
-    #DataOut.iloc[i,5]=parr[i]
+#Gleaned information:
+#increases in the gamma value appear to have a inverse-correlation with the calculated values
+#increases in the beta values appear to have a direct-correlation with the calculated values 
+#Thus...increase beta to increase the spread of the disease

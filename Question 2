@@ -1,0 +1,305 @@
+##Question2
+#Import Packages
+import pandas
+import numpy
+from scipy.optimize import minimize
+from scipy.stats import norm
+import scipy.integrate as spi
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+import re
+import os
+from plotnine import *
+
+#Total Population=1000 (999 susceptible, 1 infected, 0 resistant)
+N=1000
+#Initial infected (I0) & Initial Resistant (R0)
+I0=1
+R0=0
+#Everyone susceptible
+S0=N-I0-R0
+N=S0+I0+R0
+#Recovery Rates
+beta, gamma=0.2,1/10
+
+#Time
+t=0
+t = np.linspace(0, 500, 500)
+#number susceptible
+sList=[] 
+#number infected
+iList=[]
+#number recovered
+rList=[]
+#new infections
+newList=[]
+
+
+#Time
+t = np.linspace(0, 500, 500)
+ 
+#SIR Differential Equations
+def deriv(y, t, N, beta, gamma):
+    S = y
+    I = y
+    R = y
+    dSdt = -beta * S * I / N
+    dIdt = beta * S * I / N - gamma * I
+    dRdt = gamma * I
+    return dSdt, dIdt, dRdt
+  
+#Initial Conditions
+y0 = S0, I0, R0
+
+#Integrate
+ret = odeint(deriv, y0, t, args=(N, beta, gamma))
+S, I, R = ret.T
+
+#Variable Equations
+#Incidence
+I(t) = I(t)-I(t-1)
+#prevalence
+P=I/(S+I+R)
+#percent affected
+A=(I+R)/(S+I+R)
+#Basic Repduction
+R0=beta*(S+I+R)/gamma
+
+#values
+beta=0.0005
+gamma=0.05
+#time (days)
+ t = np.linspace(0, 500, 500)
+ while I > 0:
+    newI = 0
+        for i in range(S):
+      
+        if random.random() < b*(I/N):
+            newI += 1
+            recoverI = 0
+    for i in range(I):
+        if random.random() < g:
+            recoverI += 1
+    
+    S -= newI
+    I += (newI - recoverI)
+    R += recoverI
+    
+    #Append
+    sList.append(S)
+    iList.append(I)
+    rList.append(R)
+    newIList.append(newI)
+    
+    print('t', t)
+    t += 1
+#Print
+print('sList', sList)
+print('iList', iList)
+print('rList', rList)
+print('newIList', newIList)
+
+#values
+beta=0.005
+gamma=0.5
+#time (days)
+ t = np.linspace(0, 500, 500)
+ while I > 0:
+    newI = 0
+        for i in range(S):
+      
+        if random.random() < b*(I/N):
+            newI += 1
+            recoverI = 0
+    for i in range(I):
+        if random.random() < g:
+            recoverI += 1
+    
+    S -= newI
+    I += (newI - recoverI)
+    R += recoverI
+    
+    #Append
+    sList.append(S)
+    iList.append(I)
+    rList.append(R)
+    newIList.append(newI)
+    
+    print('t', t)
+    t += 1
+#Print
+print('sList', sList)
+print('iList', iList)
+print('rList', rList)
+print('newIList', newIList)
+
+#values
+beta=0.0001
+gamma=0.1
+#time (days)
+ t = np.linspace(0, 500, 500)
+ while I > 0:
+    newI = 0
+        for i in range(S):
+      
+        if random.random() < b*(I/N):
+            newI += 1
+            recoverI = 0
+    for i in range(I):
+        if random.random() < g:
+            recoverI += 1
+    
+    S -= newI
+    I += (newI - recoverI)
+    R += recoverI
+    
+    #Append
+    sList.append(S)
+    iList.append(I)
+    rList.append(R)
+    newIList.append(newI)
+    
+    print('t', t)
+    t += 1
+#Print
+print('sList', sList)
+print('iList', iList)
+print('rList', rList)
+print('newIList', newIList)
+
+#values
+beta=0.00005
+gamma=0.1
+#time (days)
+ t = np.linspace(0, 500, 500)
+ while I > 0:
+    newI = 0
+        for i in range(S):
+      
+        if random.random() < b*(I/N):
+            newI += 1
+            recoverI = 0
+    for i in range(I):
+        if random.random() < g:
+            recoverI += 1
+    
+    S -= newI
+    I += (newI - recoverI)
+    R += recoverI
+    
+    #Append
+    sList.append(S)
+    iList.append(I)
+    rList.append(R)
+    newIList.append(newI)
+    
+    print('t', t)
+    t += 1
+#Print
+print('sList', sList)
+print('iList', iList)
+print('rList', rList)
+print('newIList', newIList)
+
+#values
+beta=0.0001
+gamma=0.05
+#time (days)
+ t = np.linspace(0, 500, 500)
+ while I > 0:
+    newI = 0
+        for i in range(S):
+      
+        if random.random() < b*(I/N):
+            newI += 1
+            recoverI = 0
+    for i in range(I):
+        if random.random() < g:
+            recoverI += 1
+    
+    S -= newI
+    I += (newI - recoverI)
+    R += recoverI
+    
+    #Append
+    sList.append(S)
+    iList.append(I)
+    rList.append(R)
+    newIList.append(newI)
+    
+    print('t', t)
+    t += 1
+#Print
+print('sList', sList)
+print('iList', iList)
+print('rList', rList)
+print('newIList', newIList)
+
+#values
+beta=0.0002
+gamma=0.05
+#time (days)
+ t = np.linspace(0, 500, 500)
+ while I > 0:
+    newI = 0
+        for i in range(S):
+      
+        if random.random() < b*(I/N):
+            newI += 1
+            recoverI = 0
+    for i in range(I):
+        if random.random() < g:
+            recoverI += 1
+    
+    S -= newI
+    I += (newI - recoverI)
+    R += recoverI
+    
+    #Append
+    sList.append(S)
+    iList.append(I)
+    rList.append(R)
+    newIList.append(newI)
+    
+    print('t', t)
+    t += 1
+#Print
+print('sList', sList)
+print('iList', iList)
+print('rList', rList)
+print('newIList', newIList)
+
+#values
+beta=0.0001
+gamma=0.06
+#time (days)
+ t = np.linspace(0, 500, 500)
+ while I > 0:
+    newI = 0
+        for i in range(S):
+      
+        if random.random() < b*(I/N):
+            newI += 1
+            recoverI = 0
+    for i in range(I):
+        if random.random() < g:
+            recoverI += 1
+    
+    S -= newI
+    I += (newI - recoverI)
+    R += recoverI
+    
+    #Append
+    sList.append(S)
+    iList.append(I)
+    rList.append(R)
+    newIList.append(newI)
+    
+    print('t', t)
+    t += 1
+#Print
+print('sList', sList)
+print('iList', iList)
+print('rList', rList)
+print('newIList', newIList)
+
